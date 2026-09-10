@@ -15,6 +15,7 @@ button { border: 0; font: inherit; cursor: pointer; }
 .sidebar { background: #fff; border-right: 1px solid var(--line); width: 254px; padding: 28px 16px 18px; display: flex; flex-direction: column; }
 .brand { color: var(--ink); text-decoration: none; font-weight: 800; letter-spacing: .2em; font-size: 15px; display: flex; align-items: center; gap: 10px; padding: 0 12px 33px; }
 .brand-mark { background: var(--ink); color: white; border-radius: 8px; width: 27px; height: 27px; display: grid; place-items: center; font-size: 14px; letter-spacing: 0; }
+.brand-logo { object-fit: cover; display: block; }
 .brand-muted { color: #afb4bd; margin-left: 1px; }
 .workspace-switcher { border: 1px solid var(--line); border-radius: 9px; padding: 10px 11px; display: flex; align-items: center; gap: 8px; color: #5e6873; font-size: 11px; margin: 0 4px 28px; }
 .workspace-dot, .admin-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--purple); flex: none; }
