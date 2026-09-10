@@ -6,3 +6,6 @@ services:
     startCommand: "python server.py"
     healthCheckPath: /landing.html
     plan: free
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
