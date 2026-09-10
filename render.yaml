@@ -5,11 +5,4 @@ services:
     buildCommand: "python -m py_compile server.py"
     startCommand: "python server.py"
     healthCheckPath: /landing.html
-    plan: starter
-    disk:
-      name: navi-data
-      mountPath: /var/data
-      sizeGB: 1
-    envVars:
-      - key: NAVI_DATA_DIR
-        value: /var/data
+    plan: free
