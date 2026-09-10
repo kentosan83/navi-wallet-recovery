@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Navi view-only withdrawal request preview." />
+    <title>Withdraw | Navi Wallet Recovery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="withdraw-page">
+      <header class="withdraw-header">
+        <a class="brand" href="/index.html" aria-label="Back to Navi dashboard"><span class="brand-mark">N</span><span>NAVI<span class="brand-muted">/</span></span></a>
+        <a class="outline-button" href="/index.html">← Back to dashboard</a>
+      </header>
+      <main class="withdraw-main">
+        <section class="withdraw-card">
+          <p class="eyebrow">VIEW-ONLY WITHDRAWAL</p>
+          <h1>Withdraw funds</h1>
+          <p class="heading-copy">Prepare a withdrawal request for review. Navi never holds funds, signs transactions, or sends money to a bank.</p>
+          <div class="notice"><span class="notice-icon">i</span><p><strong>Your wallet stays in control.</strong> Complete the actual transfer through your own regulated wallet or exchange.</p></div>
+          <section class="available-balance" aria-live="polite">
+            <div>
+              <p class="eyebrow">AVAILABLE BALANCE</p>
+              <strong id="available-usd">Loading...</strong>
+            </div>
+            <small id="available-balance-status">ETH and supported tokens on Ethereum mainnet</small>
+          </section>
+          <form id="withdraw-form" class="withdraw-form">
+            <label>Withdrawal country<select id="withdraw-country" required><option value="">Choose a country</option><option value="AU">Australia</option><option value="BR">Brazil</option><option value="CA">Canada</option><option value="FR">France</option><option value="DE">Germany</option><option value="IN">India</option><option value="IT">Italy</option><option value="JP">Japan</option><option value="MX">Mexico</option><option value="NL">Netherlands</option><option value="SG">Singapore</option><option value="ES">Spain</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option><option value="US">United States</option></select></label>
+            <div class="withdraw-grid">
+              <label>Local currency<select id="withdraw-currency" required disabled><option value="">Choose a country first</option></select></label>
+              <label>Transfer method<select id="transfer-method" required disabled><option value="">Choose a country first</option></select></label>
+            </div>
+            <label>Bank<select id="withdraw-bank" required disabled><option value="">Choose a country first</option></select></label>
+            <div class="withdraw-grid">
+              <label>Account holder<input id="bank-holder" autocomplete="name" required /></label>
+              <label>Account or IBAN<input id="bank-account" autocomplete="off" required /></label>
+            </div>
+            <div class="withdraw-grid">
+              <label>SWIFT / BIC or local code<input id="bank-code" autocomplete="off" required /></label>
+              <label>Amount in local currency<input id="withdraw-amount" inputmode="decimal" placeholder="Choose a country first" required /></label>
+            </div>
+            <button class="auth-submit" type="submit">Review withdrawal request</button>
+          </form>
+          <div id="withdraw-result" class="withdraw-result hidden" role="status"></div>
+        </section>
+      </main>
+    </div>
+    <script src="withdraw.js?v=3"></script>
+  </body>
+</html>

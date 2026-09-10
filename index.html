@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Navi Wallet Recovery — view your Ethereum wallet securely." />
+    <title>Navi Wallet Recovery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#" aria-label="Navi home">
+          <span class="brand-mark">N</span>
+          <span>NAVI<span class="brand-muted">/</span></span>
+        </a>
+
+        <div class="workspace-switcher">
+          <span class="workspace-dot"></span>
+          <span>Personal workspace</span>
+          <span class="chevron">⌄</span>
+        </div>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <p class="nav-label">Workspace</p>
+          <button class="nav-item active" data-view="overview"><span class="nav-icon">⌂</span>Overview</button>
+          <button class="nav-item" data-view="activity"><span class="nav-icon">↗</span>Activity</button>
+          <button class="nav-item" data-view="wallets"><span class="nav-icon">▣</span>Wallets</button>
+          <p class="nav-label nav-label-spaced">Manage</p>
+          <button class="nav-item" data-view="team"><span class="nav-icon">♧</span>Team access</button>
+          <button class="nav-item" data-view="settings"><span class="nav-icon">⚙</span>Settings</button>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="security-card">
+            <span class="shield">✓</span>
+            <div><strong>View-only mode</strong><small>No transactions can be signed</small></div>
+          </div>
+          <button class="user-card" data-view="settings">
+            <span class="avatar">JD</span>
+            <span><strong>Jordan Davis</strong><small>Customer account</small></span>
+            <span class="more">•••</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="breadcrumb"><span>Personal workspace</span><span>/</span><strong id="breadcrumb-current">Overview</strong></div>
+          <div class="topbar-actions">
+            <label class="language-picker"><span class="sr-only">Language</span><select id="language-select" aria-label="Language"><option value="en">English</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="pt">Português</option><option value="ar">العربية</option><option value="hi">हिन्दी</option><option value="zh">中文</option><option value="ja">日本語</option><option value="ko">한국어</option></select></label>
+            <button class="icon-button" aria-label="Help">?</button>
+            <button class="icon-button notification" aria-label="Notifications">♢<span></span></button>
+            <button class="auth-link" id="login-button">Log in</button>
+            <button class="auth-link hidden" id="account-button">Account</button>
+          </div>
+        </header>
+
+        <section class="page" id="app">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">THURSDAY, SEPTEMBER 10, 2026</p>
+              <h1>Good morning, <span id="customer-first-name">there</span> <span class="wave">✦</span></h1>
+              <p class="heading-copy">Monitor your Ethereum wallet without giving up custody.</p>
+            </div>
+            <button class="outline-button" id="connect-button"><span class="wallet-icon">◈</span><span id="connect-label">Connect wallet</span></button>
+          </div>
+
+          <div class="notice" id="wallet-notice">
+            <span class="notice-icon">i</span>
+            <p><strong>Secure, view-only access.</strong> Navi never asks for your seed phrase or private key. Connecting only lets us read public wallet data.</p>
+            <button class="notice-close" aria-label="Dismiss notice">×</button>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card balance-card">
+              <div class="card-top"><span class="card-label">Total balance</span><span class="trend positive">↗ 2.8%</span></div>
+              <div class="balance-value" id="balance-value">—<small> ETH</small></div>
+              <div class="usd-value" id="usd-value">Connect a wallet to view balance</div>
+              <div class="sparkline" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <span class="card-foot">ETH mainnet · Live price</span>
+            </article>
+            <article class="stat-card">
+              <div class="card-top"><span class="card-label">Wallets connected</span><span class="mini-icon">◈</span></div>
+              <div class="metric-value" id="wallet-count">0</div>
+              <div class="metric-foot">Connect your first wallet</div>
+            </article>
+            <article class="stat-card">
+              <div class="card-top"><span class="card-label">Network</span><span class="network-badge">●</span></div>
+              <div class="metric-value network-value" id="network-value">Not connected</div>
+              <div class="metric-foot">Read-only connection</div>
+            </article>
+          </div>
+
+          <section class="panel assets-panel">
+            <div class="panel-heading"><div><h2>Your assets</h2><p>Live balances for ETH and tokens on this network</p></div><span class="asset-live">LIVE</span></div>
+            <div id="asset-list" class="asset-list"><p class="asset-empty">Connect a wallet to view all assets.</p></div>
+          </section>
+          <section class="panel asset-detail hidden" id="asset-detail">
+            <div class="panel-heading"><div><p class="eyebrow">ASSET DETAIL</p><h2 id="asset-detail-title">Ethereum</h2><p id="asset-detail-subtitle">Live market data</p></div><button class="text-button" id="asset-detail-close">Close</button></div>
+            <div class="asset-detail-stats"><strong id="asset-detail-price">—</strong><span id="asset-detail-change">Loading price movement...</span><span id="asset-detail-balance">Balance: —</span></div>
+            <svg class="price-chart" id="price-chart" viewBox="0 0 720 220" role="img" aria-label="24 hour price chart"></svg>
+            <p class="chart-caption">24-hour price movement · updates with wallet refresh</p>
+          </section>
+
+          <div class="content-grid">
+            <section class="panel activity-panel">
+              <div class="panel-heading"><div><h2>Recent activity</h2><p>Your latest wallet movements</p></div><button class="text-button" data-view="activity">View all <span>→</span></button></div>
+              <div class="empty-activity" id="activity-empty">
+                <div class="empty-icon">↗</div>
+                <h3>No activity yet</h3>
+                <p>Connect your wallet to see transactions and token movements here.</p>
+                <button class="secondary-button" id="connect-empty">Connect wallet <span>→</span></button>
+              </div>
+              <div class="activity-list hidden" id="activity-list"></div>
+            </section>
+
+            <section class="panel quick-panel">
+              <div class="panel-heading"><div><h2>Quick actions</h2><p>Manage your view-only workspace</p></div></div>
+              <button class="quick-action" id="add-wallet"><span class="quick-icon purple">+</span><span><strong>Add another wallet</strong><small>Track a new public address</small></span><b>→</b></button>
+              <button class="quick-action" id="deposit-action"><span class="quick-icon green">↓</span><span><strong>Deposit</strong><small>View your public receiving address</small></span><b>→</b></button>
+              <button class="quick-action" id="withdraw-action"><span class="quick-icon blue">↑</span><span><strong>Withdraw</strong><small>Learn about view-only limitations</small></span><b>→</b></button>
+              <button class="quick-action" data-view="team"><span class="quick-icon blue">♧</span><span><strong>Invite a teammate</strong><small>Share access securely</small></span><b>→</b></button>
+              <button class="quick-action" data-view="settings"><span class="quick-icon green">⚙</span><span><strong>Workspace settings</strong><small>Update your preferences</small></span><b>→</b></button>
+            </section>
+          </div>
+
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <div class="auth-modal hidden" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <div class="auth-dialog">
+        <button class="modal-close" id="modal-close" aria-label="Close authentication dialog">×</button>
+        <div class="auth-brand"><span class="brand-mark">N</span><span>NAVI<span class="brand-muted">/</span></span></div>
+        <p class="eyebrow" id="auth-eyebrow">WELCOME BACK</p>
+        <h2 id="auth-title">Log in to your workspace</h2>
+        <p class="auth-copy" id="auth-copy">Access your view-only wallet dashboard securely.</p>
+        <form id="auth-form">
+          <div class="signup-only auth-fields hidden">
+            <label>Full name<input type="text" id="auth-full-name" placeholder="Your full name" autocomplete="name" /></label>
+            <label>Country<input type="text" id="auth-country" placeholder="Your country" autocomplete="country-name" /></label>
+            <label>Phone number<input type="tel" id="auth-phone" placeholder="+1 555 123 4567" autocomplete="tel" /></label>
+          </div>
+          <label>Email address<input type="email" id="auth-email" placeholder="you@example.com" required /></label>
+          <label>Password<input type="password" id="auth-password" placeholder="Enter your password" minlength="8" required /></label>
+          <button class="auth-submit" type="submit" id="auth-submit">Log in</button>
+        </form>
+        <p class="auth-switch" id="auth-switch">New to Navi? <button type="button">Create an account</button></p>
+        <p class="auth-legal">By continuing, you agree to Navi's Terms and Privacy Policy.</p>
+      </div>
+    </div>
+    <div class="auth-modal hidden" id="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+      <div class="auth-dialog profile-dialog">
+        <button class="modal-close" id="profile-close" aria-label="Close profile dialog">×</button>
+        <div class="profile-header"><span class="profile-avatar avatar">CU</span><div><p class="eyebrow">YOUR PROFILE</p><h2 id="profile-title">Account details</h2></div></div>
+        <div class="profile-details">
+          <div><span>Full name</span><strong id="profile-name">—</strong></div>
+          <div><span>Email address</span><strong id="profile-email">—</strong></div>
+          <div><span>Country</span><strong id="profile-country">—</strong></div>
+          <div><span>Phone number</span><strong id="profile-phone">—</strong></div>
+        </div>
+        <button class="logout-button" id="logout-button">Log out</button>
+      </div>
+    </div>
+    <div class="auth-modal hidden" id="wallet-modal" role="dialog" aria-modal="true" aria-labelledby="wallet-title">
+      <div class="auth-dialog">
+        <button class="modal-close" id="wallet-close" aria-label="Close wallet dialog">×</button>
+        <div class="auth-brand"><span class="brand-mark">N</span><span>NAVI<span class="brand-muted">/</span></span></div>
+        <p class="eyebrow">VIEW-ONLY WALLET</p>
+        <h2 id="wallet-title">Add a public wallet</h2>
+        <p class="auth-copy">No wallet extension detected. Paste a public Ethereum address to monitor it without sharing keys.</p>
+        <form id="wallet-form">
+          <label>Ethereum address<input type="text" id="manual-address" placeholder="0x..." pattern="0x[a-fA-F0-9]{40}" required /></label>
+          <label>Network<select id="manual-chain"><option value="0x1">Ethereum mainnet</option><option value="0xaa36a7">Sepolia testnet</option></select></label>
+          <button class="auth-submit" type="submit">Add view-only wallet</button>
+        </form>
+        <p class="auth-legal">Only public wallet addresses are accepted. Never enter a seed phrase or private key.</p>
+      </div>
+    </div>
+    <div class="auth-modal hidden" id="transfer-modal" role="dialog" aria-modal="true" aria-labelledby="transfer-title">
+      <div class="auth-dialog">
+        <button class="modal-close" id="transfer-close" aria-label="Close transfer dialog">×</button>
+        <div class="auth-brand"><span class="brand-mark">N</span><span>NAVI<span class="brand-muted">/</span></span></div>
+        <p class="eyebrow" id="transfer-eyebrow">DEPOSIT</p>
+        <h2 id="transfer-title">Receive funds</h2>
+        <p class="auth-copy" id="transfer-copy">Send ETH or supported tokens to this public address.</p>
+        <div class="transfer-address hidden" id="deposit-address"></div>
+        <button class="auth-submit hidden" id="copy-address" type="button">Copy address</button>
+        <form class="bank-withdrawal hidden" id="bank-withdrawal-form">
+          <label>Withdrawal country
+            <select id="withdraw-country" required>
+              <option value="">Choose a country</option>
+              <option value="AU">Australia</option><option value="BR">Brazil</option><option value="CA">Canada</option><option value="FR">France</option><option value="DE">Germany</option><option value="IN">India</option><option value="IT">Italy</option><option value="JP">Japan</option><option value="MX">Mexico</option><option value="NL">Netherlands</option><option value="SG">Singapore</option><option value="ES">Spain</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option><option value="US">United States</option>
+            </select>
+          </label>
+          <label>Local currency<select id="withdraw-currency" required disabled><option>Select a country first</option></select></label>
+          <label>Transfer method<select id="transfer-method" required disabled><option>Select a country first</option></select></label>
+          <label>Bank<select id="withdraw-bank" required disabled><option>Select a country first</option></select></label>
+          <label>Bank account holder<input id="bank-holder" type="text" autocomplete="name" required /></label>
+          <label>Bank account or IBAN<input id="bank-account" type="text" autocomplete="off" required /></label>
+          <label>SWIFT / BIC or local bank code<input id="bank-code" type="text" autocomplete="off" required /></label>
+          <label>Amount in local currency<input id="withdraw-amount" type="text" placeholder="Choose a country first" required /></label>
+          <button class="auth-submit" type="submit">Review withdrawal request</button>
+        </form>
+        <p class="auth-legal" id="transfer-note">Only send assets on the selected network. Navi never asks for private keys.</p>
+      </div>
+    </div>
+    <script src="app.js?v=24"></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Navi helps you monitor Ethereum wallets without giving up custody." />
+    <title>Navi — View your Ethereum wallet securely</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="landing-page">
+    <header class="landing-nav">
+      <a class="brand" href="landing.html"><span class="brand-mark">N</span><span>NAVI<span class="brand-muted">/</span></span></a>
+      <nav><label class="language-picker landing-language"><span class="sr-only">Language</span><select id="language-select" aria-label="Language"><option value="en">English</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="pt">Português</option><option value="ar">العربية</option><option value="hi">हिन्दी</option><option value="zh">中文</option><option value="ja">日本語</option><option value="ko">한국어</option></select></label><a href="#how-it-works">How it works</a><a href="#security">Security</a><button class="wallet-nav-button" id="wallet-button">Connect wallet</button><button class="auth-link" id="login-button">Log in</button><button class="auth-signup" id="signup-button">Sign up</button></nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">A CLEARER VIEW OF YOUR DIGITAL ASSETS</p>
+          <h1>See your Ethereum wallet.<br /><em>Keep control of it.</em></h1>
+          <p class="hero-text">Navi gives you a calm, secure way to monitor wallet balances and activity. Connect your public address in view-only mode — your keys always stay with you.</p>
+          <div class="hero-actions"><button class="auth-signup hero-button" id="hero-signup">Create a free account <span>→</span></button><button class="wallet-hero-button" id="hero-wallet">Connect a wallet <span>◈</span></button><button class="learn-button" id="learn-button">Explore Navi <span>↓</span></button></div>
+          <div class="trust-line"><span>✓</span> No seed phrase required <span>✓</span> View-only by design <span>✓</span> Your keys stay yours</div>
+        </div>
+        <div class="hero-visual">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="wallet-card">
+            <div class="wallet-card-top"><span class="brand-mark small-mark">N</span><span class="wallet-live"><i></i> LIVE VIEW</span></div>
+            <p class="wallet-label">TOTAL PORTFOLIO</p><strong>2.4831 <small>ETH</small></strong><p class="wallet-usd">$8,421.06 <span>↗ 4.8%</span></p>
+            <div class="wallet-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="wallet-card-foot"><span>0x71a4...c92f</span><span>Ethereum mainnet</span></div>
+          </div>
+          <span class="float-chip chip-one">VIEW ONLY <b>✓</b></span><span class="float-chip chip-two">YOUR KEYS <b>↗</b></span>
+        </div>
+      </section>
+      <section class="intro-section" id="how-it-works"><p class="eyebrow">SIMPLE BY DESIGN</p><h2>Everything you need to stay informed.</h2><div class="feature-grid"><article><span class="feature-number">01</span><h3>Connect securely</h3><p>Link a public wallet address in seconds. Navi never asks for your seed phrase or private key.</p></article><article><span class="feature-number">02</span><h3>Understand your assets</h3><p>See ETH balances, network details, and wallet activity in one focused workspace.</p></article><article id="security"><span class="feature-number">03</span><h3>Stay in control</h3><p>View-only access means Navi can read public data, but cannot move your funds or sign transactions.</p></article></div></section>
+      <section class="landing-cta"><div><p class="eyebrow">READY WHEN YOU ARE</p><h2>Start with a clearer view.</h2></div><button class="auth-signup hero-button" id="bottom-signup">Create your free account <span>→</span></button></section>
+    </main>
+    <footer class="landing-footer"><span>© 2026 Navi Wallet Recovery</span><span>Built for visibility. Designed for custody.</span></footer>
+    <div class="toast" id="toast" role="status"></div>
+    <div class="auth-modal hidden" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <div class="auth-dialog"><button class="modal-close" id="modal-close" aria-label="Close authentication dialog">×</button><div class="auth-brand"><span class="brand-mark">N</span><span>NAVI<span class="brand-muted">/</span></span></div><p class="eyebrow" id="auth-eyebrow">WELCOME BACK</p><h2 id="auth-title">Log in to your workspace</h2><p class="auth-copy" id="auth-copy">Access your view-only wallet dashboard securely.</p><form id="auth-form"><div class="signup-only auth-fields hidden"><label>Full name<input type="text" id="auth-full-name" placeholder="Your full name" autocomplete="name" /></label><label>Country<input type="text" id="auth-country" placeholder="Your country" autocomplete="country-name" /></label><label>Phone number<input type="tel" id="auth-phone" placeholder="+1 555 123 4567" autocomplete="tel" /></label></div><label>Email address<input type="email" id="auth-email" placeholder="you@example.com" required /></label><label>Password<input type="password" id="auth-password" placeholder="Enter your password" minlength="8" required /></label><button class="auth-submit" type="submit" id="auth-submit">Log in</button></form><p class="auth-switch" id="auth-switch">New to Navi? <button type="button">Create an account</button></p><p class="auth-legal">By continuing, you agree to Navi's Terms and Privacy Policy.</p></div>
+    </div>
+    <script src="landing.js?v=5"></script>
+  </body>
+</html>

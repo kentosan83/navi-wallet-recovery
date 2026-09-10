@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.py[cod]
+navi.sqlite3
+render-test-data/
+.env
+.env.*

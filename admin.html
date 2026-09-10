@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Navi Wallet Recovery admin console." />
+    <title>Navi Admin Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="admin-page">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="index.html" aria-label="Back to customer dashboard">
+          <span class="brand-mark">N</span>
+          <span>NAVI<span class="brand-muted">/</span></span>
+        </a>
+        <div class="workspace-switcher"><span class="workspace-dot admin-workspace-dot"></span><span>Admin workspace</span><span class="chevron">⌄</span></div>
+        <nav class="main-nav" aria-label="Admin navigation">
+          <p class="nav-label">Administration</p>
+          <button class="nav-item active" data-admin-view="dashboard"><span class="nav-icon">⌂</span>Dashboard</button>
+          <button class="nav-item" data-admin-view="customers"><span class="nav-icon">♧</span>Customers</button>
+          <button class="nav-item" data-admin-view="wallets"><span class="nav-icon">◈</span>Wallet registry</button>
+          <button class="nav-item" data-admin-view="reviews"><span class="nav-icon">✓</span>Pending reviews <span class="nav-count">7</span></button>
+          <p class="nav-label nav-label-spaced">System</p>
+          <button class="nav-item" data-admin-view="settings"><span class="nav-icon">⚙</span>Admin settings</button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="security-card admin-security"><span class="shield">✓</span><div><strong>Admin access</strong><small>Audit logging enabled</small></div></div>
+          <a class="user-card admin-user" href="index.html"><span class="avatar admin-avatar">AD</span><span><strong>Alex Morgan</strong><small>Workspace administrator</small></span><span class="more">•••</span></a>
+        </div>
+      </aside>
+      <main class="main-content">
+        <header class="topbar">
+          <div class="breadcrumb"><span>Admin workspace</span><span>/</span><strong id="admin-breadcrumb">Dashboard</strong></div>
+          <div class="topbar-actions"><a class="customer-link" href="index.html">← Customer view</a><button class="icon-button" aria-label="Notifications">♢<span></span></button><span class="admin-role">Administrator</span></div>
+        </header>
+        <section class="page">
+          <div class="page-heading admin-page-heading">
+            <div><p class="eyebrow">ADMINISTRATION · THURSDAY, SEPTEMBER 10, 2026</p><h1>Workspace overview</h1><p class="heading-copy">Keep an eye on customers, wallets, and platform health.</p></div>
+            <button class="outline-button" id="export-button"><span>↓</span> Export report</button>
+          </div>
+          <div class="stats-grid">
+            <article class="stat-card admin-metric"><div class="card-top"><span class="card-label">Active customers</span><span class="trend positive">↗ 12.4%</span></div><div class="metric-value">248</div><div class="metric-foot">Compared with last month</div></article>
+            <article class="stat-card admin-metric"><div class="card-top"><span class="card-label">Connected wallets</span><span class="mini-icon">◈</span></div><div class="metric-value">391</div><div class="metric-foot">Across all customer workspaces</div></article>
+            <article class="stat-card admin-metric"><div class="card-top"><span class="card-label">Pending reviews</span><span class="review-badge">Needs attention</span></div><div class="metric-value">07</div><div class="metric-foot">Require administrator action</div></article>
+          </div>
+          <div class="admin-content-grid">
+            <section class="panel admin-health-panel"><div class="panel-heading"><div><h2>Platform health</h2><p>Live status across Navi services</p></div><span class="admin-status"><i></i>All systems operational</span></div><div class="health-list"><div><span class="health-icon green">✓</span><span><strong>Wallet connections</strong><small>Responding normally</small></span><b>99.99%</b></div><div><span class="health-icon green">✓</span><span><strong>Ethereum data service</strong><small>Last synced just now</small></span><b>Healthy</b></div><div><span class="health-icon green">✓</span><span><strong>Authentication</strong><small>No incidents reported</small></span><b>Healthy</b></div></div></section>
+            <section class="panel review-panel"><div class="panel-heading"><div><h2>Review queue</h2><p>Items needing attention</p></div><button class="text-button" data-admin-view="reviews">View all <span>→</span></button></div><div class="review-list"><div><span class="review-avatar">JM</span><span><strong>James Miller</strong><small>New wallet verification</small></span><time>12 min</time></div><div><span class="review-avatar orange">SK</span><span><strong>Sarah Kim</strong><small>Access request</small></span><time>34 min</time></div><div><span class="review-avatar blue-avatar">RB</span><span><strong>Robert Brown</strong><small>Wallet relink request</small></span><time>1 hr</time></div></div></section>
+          </div>
+          <section class="panel customers-panel"><div class="panel-heading"><div><h2>Recent customers</h2><p>Latest workspace activity</p></div><button class="text-button" data-admin-view="customers">Manage customers <span>→</span></button></div><div class="customer-table"><div class="table-row table-head"><span>Customer</span><span>Wallets</span><span>Status</span><span>Last active</span></div><div class="table-row"><span class="customer-name"><i class="customer-avatar peach">JD</i><strong>Jordan Davis</strong></span><span>2 wallets</span><span class="status-pill">Active</span><span>Today, 05:41</span></div><div class="table-row"><span class="customer-name"><i class="customer-avatar lilac">JM</i><strong>James Miller</strong></span><span>1 wallet</span><span class="status-pill">Active</span><span>Today, 05:27</span></div><div class="table-row"><span class="customer-name"><i class="customer-avatar mint">SK</i><strong>Sarah Kim</strong></span><span>3 wallets</span><span class="status-pill pending-pill">Pending review</span><span>Yesterday</span></div></div></section>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script>
+      const toast = (message) => { const node = document.querySelector('#toast'); node.textContent = message; node.classList.add('show'); window.setTimeout(() => node.classList.remove('show'), 2800); };
+      document.querySelectorAll('[data-admin-view]').forEach((item) => item.addEventListener('click', () => { const title = item.dataset.adminView[0].toUpperCase() + item.dataset.adminView.slice(1); document.querySelector('#admin-breadcrumb').textContent = title; document.querySelectorAll('.nav-item').forEach((nav) => nav.classList.toggle('active', nav === item)); if (item.tagName === 'BUTTON') toast(`${title} section selected.`); }));
+      document.querySelector('#export-button').addEventListener('click', () => toast('Report export is ready for backend integration.'));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Review a Navi view-only withdrawal request." />
+    <title>Review withdrawal | Navi Wallet Recovery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="withdraw-page">
+      <header class="withdraw-header">
+        <a class="brand" href="/index.html" aria-label="Back to Navi dashboard"><span class="brand-mark">N</span><span>NAVI<span class="brand-muted">/</span></span></a>
+        <a class="outline-button" href="/withdraw.html">← Edit request</a>
+      </header>
+      <main class="withdraw-main">
+        <section class="withdraw-card">
+          <p class="eyebrow">STEP 2 OF 2 · REVIEW</p>
+          <h1>Why are you making this transfer?</h1>
+          <p class="heading-copy">Tell us the reason for this request before reviewing the details. This is an informational preview only; Navi does not execute or submit transfers.</p>
+          <div class="notice"><span class="notice-icon">i</span><p><strong>View-only request.</strong> Your reason and bank details stay in this browser and are not sent to Navi's backend.</p></div>
+          <div class="review-summary" id="review-summary"></div>
+          <form id="reason-form" class="withdraw-form">
+            <label for="transfer-reason">Reason for transfer
+              <textarea id="transfer-reason" rows="5" maxlength="500" required placeholder="For example: personal savings, invoice payment, or family support"></textarea>
+            </label>
+            <button class="auth-submit" type="submit">Continue to final review</button>
+          </form>
+          <div id="review-result" class="withdraw-result hidden" role="status"></div>
+        </section>
+      </main>
+    </div>
+    <script src="review-withdrawal.js?v=1"></script>
+  </body>
+</html>
