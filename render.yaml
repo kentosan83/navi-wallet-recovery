@@ -2,10 +2,7 @@ services:
   - type: web
     name: navi-wallet-recovery
     runtime: python
-    buildCommand: "python -m py_compile server.py"
+    buildCommand: "pip install -r requirements.txt && python -m py_compile server.py"
     startCommand: "python server.py"
     healthCheckPath: /landing.html
     plan: free
-    envVars:
-      - key: HOST
-        value: 0.0.0.0

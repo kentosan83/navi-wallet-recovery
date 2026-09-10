@@ -1,6 +1,4 @@
 import hashlib
-import os
-os.environ["HOST"] = "0.0.0.0"
 import hmac
 import http.cookies
 import json
@@ -15,6 +13,7 @@ from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse
 
+DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.environ.get("NAVI_DATA_DIR", ROOT)
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -32,7 +31,45 @@ TOKEN_ENDPOINTS = {
 COINGECKO_API = "https://api.coingecko.com/api/v3"
 
 
+class PostgreSQLConnection:
+    def __init__(self, connection):
+        self.connection = connection
+
+    def __enter__(self):
+        self.connection.__enter__()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        return self.connection.__exit__(exc_type, exc_value, traceback)
+
+    def commit(self):
+        self.connection.commit()
+
+    def cursor(self):
+        return self.connection.cursor()
+
+    def execute(self, query, parameters=()):
+        query = query.replace("?", "%s").replace("INSERT OR IGNORE", "INSERT")
+        if "INSERT INTO wallets" in query:
+            query = query.replace(
+                "VALUES (%s, %s, %s, %s)",
+                "VALUES (%s, %s, %s, %s) ON CONFLICT (user_id, address, chain_id) DO NOTHING",
+            )
+        if "INSERT INTO users" in query:
+            query = query.rstrip(";") + " RETURNING id"
+        cursor = self.connection.cursor()
+        cursor.execute(query, parameters)
+        return cursor
+
+
 def db():
+    if DATABASE_URL:
+        try:
+            import psycopg2
+            import psycopg2.extras
+        except ImportError as error:
+            raise RuntimeError("DATABASE_URL is configured but psycopg2-binary is not installed.") from error
+        return PostgreSQLConnection(psycopg2.connect(DATABASE_URL, cursor_factory=psycopg2.extras.RealDictCursor))
     connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
     connection.execute("PRAGMA foreign_keys = ON")
@@ -40,6 +77,38 @@ def db():
 
 
 def initialize():
+    if DATABASE_URL:
+        with db() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """
+                    CREATE TABLE IF NOT EXISTS users (
+                        id SERIAL PRIMARY KEY,
+                        email TEXT NOT NULL UNIQUE,
+                        password_hash TEXT NOT NULL,
+                        full_name TEXT NOT NULL DEFAULT '',
+                        country TEXT NOT NULL DEFAULT '',
+                        phone TEXT NOT NULL DEFAULT '',
+                        role TEXT NOT NULL DEFAULT 'customer',
+                        created_at BIGINT NOT NULL
+                    );
+                    CREATE TABLE IF NOT EXISTS sessions (
+                        token TEXT PRIMARY KEY,
+                        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                        expires_at BIGINT NOT NULL
+                    );
+                    CREATE TABLE IF NOT EXISTS wallets (
+                        id SERIAL PRIMARY KEY,
+                        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                        address TEXT NOT NULL,
+                        chain_id TEXT NOT NULL,
+                        created_at BIGINT NOT NULL,
+                        UNIQUE(user_id, address, chain_id)
+                    );
+                    """
+                )
+            connection.commit()
+        return
     with db() as connection:
         connection.executescript(
             """
@@ -168,10 +237,15 @@ class Handler(SimpleHTTPRequestHandler):
                             "INSERT INTO users(email, password_hash, full_name, country, phone, created_at) VALUES (?, ?, ?, ?, ?, ?)",
                             (email, password_hash(password), full_name, country, phone, int(time.time())),
                         )
+                        user_id = cursor.fetchone()["id"] if DATABASE_URL else cursor.lastrowid
                     except sqlite3.IntegrityError:
                         return self.send_json(HTTPStatus.CONFLICT, {"error": "An account with that email already exists."})
+                    except Exception as error:
+                        if DATABASE_URL and error.__class__.__name__ == "UniqueViolation":
+                            return self.send_json(HTTPStatus.CONFLICT, {"error": "An account with that email already exists."})
+                        raise
                 self.send_response(HTTPStatus.CREATED)
-                self.send_header("Set-Cookie", self.set_session(cursor.lastrowid))
+                self.send_header("Set-Cookie", self.set_session(user_id))
                 self.send_header("Content-Type", "application/json")
                 payload = json.dumps({"email": email, "fullName": full_name, "country": country, "phone": phone, "role": "customer"}).encode()
                 self.send_header("Content-Length", str(len(payload)))
@@ -362,6 +436,6 @@ class Handler(SimpleHTTPRequestHandler):
 if __name__ == "__main__":
     initialize()
     port = int(os.environ.get("PORT", "8080"))
-    host = os.environ.get("HOST", "127.0.0.1")
+    host = os.environ.get("HOST", "0.0.0.0" if os.environ.get("PORT") else "127.0.0.1")
     print(f"Navi backend running on {host}:{port}")
     ThreadingHTTPServer((host, port), Handler).serve_forever()

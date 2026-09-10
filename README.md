@@ -15,7 +15,7 @@ Then open:
 - Admin page: http://localhost:8080/admin.html
 - Withdrawal request page: http://localhost:8080/withdraw.html
 
-The backend uses Python's standard library and creates `navi.sqlite3` automatically. It provides:
+The backend uses Python's standard library and creates `navi.sqlite3` automatically for local development. In production, set a PostgreSQL `DATABASE_URL`; the server automatically creates the required tables there so accounts and wallets survive Render restarts and redeployments. It provides:
 
 - `POST /api/signup`
 - `POST /api/login`
@@ -43,12 +43,12 @@ Withdrawal country selection also sets the local currency: Japan uses JPY, the U
 
 ## Deploy online with Render
 
-The repository includes `render.yaml` for a Render web service. Render runs the Python backend continuously while your laptop is off, provides HTTPS, and mounts `/var/data` as persistent storage for `navi.sqlite3`.
+The repository includes `render.yaml` for a free Render web service. Render runs the Python backend while your laptop is off and provides HTTPS.
 
 1. Put this folder in a GitHub repository. Do not commit secrets or the `.venv` folder.
 2. In Render, choose **New + → Blueprint** and connect the GitHub repository.
-3. Select the repository's `render.yaml` file and create the service.
+3. Select the repository's `render.yaml` file and create the service using the free plan.
 4. After deployment, open the generated `https://...onrender.com/landing.html` URL.
 5. Add a custom domain in Render if you want a branded public address.
 
-The Render configuration uses a persistent disk because SQLite data is otherwise lost when a service is redeployed. Persistent disks are part of Render's paid service plans. Before public launch, review admin authorization, add rate limiting and CSRF protection, set secure cookie attributes, and use a production database such as PostgreSQL if multiple service instances are needed.
+The free Render plan has ephemeral storage, so the local SQLite database can reset after a restart or redeploy. For durable customer accounts and wallets, create a free PostgreSQL database with Supabase or Neon and add its private connection string to Render as `DATABASE_URL`. Never commit that value to GitHub. Before public launch, review admin authorization, add rate limiting and CSRF protection, and set secure cookie attributes.
