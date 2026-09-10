@@ -1,4 +1,6 @@
 import hashlib
+import os
+os.environ["HOST"] = "0.0.0.0"
 import hmac
 import http.cookies
 import json
